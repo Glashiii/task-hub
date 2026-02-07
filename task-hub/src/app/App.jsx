@@ -1,5 +1,5 @@
-import Sidebar from "../widgets/Sidebar.jsx";
-import Home from "../pages/home.jsx";
+import Sidebar from "../widgets/sidebar/Sidebar.jsx";
+import Dashboard from "../pages/Dashboard.jsx";
 
 function App() {
 
@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
             <Sidebar></Sidebar>
-            <Home></Home>
+            <Dashboard></Dashboard>
         </div>
     )
 }
