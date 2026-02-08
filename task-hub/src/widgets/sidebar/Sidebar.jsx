@@ -8,8 +8,8 @@ const Sidebar = () => {
                 <h1>TaskHub</h1>
             </div>
             <hr className={styles.sidebarDivider} />
-            <SidebarLink title={'Dashboard'}></SidebarLink>
-            <SidebarLink title={'Profile'}></SidebarLink>
+            <SidebarLink title={'Dashboard'} url={'/'}></SidebarLink>
+            <SidebarLink title={'Profile'}  url={'/profile'}></SidebarLink>
         </aside>
     )
 }
