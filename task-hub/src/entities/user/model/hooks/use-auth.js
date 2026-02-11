@@ -1,16 +1,10 @@
-import {useSelector} from 'react-redux'
+import {useUser} from "../../../../app/store/use-user.js";
+import {shallow} from "zustand/shallow";
 
 export const useAuth = () => {
-    const {
-        email,
-        token,
-        id
-    } = useSelector(state => state.user)
+    const email = useUser((state) => state.email);
+    const token = useUser((state) => state.token);
+    const id = useUser((state) => state.id);
 
-    return {
-        isAuth: !!email,
-        email,
-        token,
-        id
-    }
-}
+    return { isAuth: !!email, email, token, id };
+};

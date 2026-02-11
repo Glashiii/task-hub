@@ -1,11 +1,11 @@
 import {useAuth} from "../entities/user/model/hooks/use-auth.js";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {removeUser} from "../app/store/slices/userSlice.js";
+import {useUser} from "../app/store/use-user.js";
+
 
 const Dashboard = () => {
 
-    const dispatch = useDispatch();
+    const removeUser = useUser((state) => state.removeUser);
 
     const {
         email
@@ -16,7 +16,7 @@ const Dashboard = () => {
             some main info
             {email}
 
-            <button onClick={() => dispatch(removeUser(email))}>
+            <button onClick={() => removeUser()}>
 
             </button>
         </div>

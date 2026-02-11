@@ -1,12 +1,15 @@
-import {useDispatch} from "react-redux";
+// import {useDispatch} from "react-redux";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import {setUser} from '../app/store/slices/userSlice'
+// import {setUser} from '../app/store/slices/userSlice'
 import {Form} from "./Form.jsx";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useUser} from "../app/store/use-user.js";
 
 const Login = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const location = useLocation();
+    // const dispatch = useDispatch();
+    const addUser = useUser((state) => state.setUser);
 
     const from = location.state?.from || "/";
 
@@ -14,11 +17,12 @@ const Login = () => {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
             .then(({user}) => {
-                dispatch(setUser({
-                    email: user.email,
-                    id: user.uid,
-                    token: user.accessToken,
-                }))
+                addUser(user.email, user.accessToken, user.uid);
+                // dispatch(setUser({
+                //     email: user.email,
+                //     id: user.uid,
+                //     token: user.accessToken,
+                // }))
                 navigate(from, {replace: true});
             })
 
