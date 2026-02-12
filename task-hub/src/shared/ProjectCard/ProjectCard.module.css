@@ -1,0 +1,17 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    text-align: center;
+    background: #fff;
+    margin: 1rem;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+    padding: 1rem;
+    line-height: 20px;
+}

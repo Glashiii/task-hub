@@ -1,0 +1,11 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+
+.card-field {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+}

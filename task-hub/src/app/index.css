@@ -28,7 +28,9 @@
     height: 100vh;
 }
 
-
+main {
+    width: 100%;
+}
 
 body {
     margin: 0;
@@ -36,6 +38,7 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
+    background-color: var(--background-color);
 }
 a{
     width: 100%;

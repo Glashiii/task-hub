@@ -1,5 +1,4 @@
 import {useUser} from "../../../../app/store/use-user.js";
-import {shallow} from "zustand/shallow";
 
 export const useAuth = () => {
     const email = useUser((state) => state.email);
