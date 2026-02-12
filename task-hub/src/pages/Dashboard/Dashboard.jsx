@@ -16,8 +16,21 @@ const Dashboard = () => {
         <div className={styles.dashboard}>
             <h1>Welcome</h1>
             <div className={styles["card-field"]}>
+                <ProjectCard
+                    title="Some title"
+                    info="This is the info of your project"
+                    tasksCount={5}
+                    completedCount={2}
+                />
                 <ProjectCard />
                 <ProjectCard />
+                <ProjectCard
+                    title="Some title"
+                    info="This is the info of your project"
+                    tasksCount={5}
+                    completedCount={2}
+                />
+
             </div>
 
         </div>

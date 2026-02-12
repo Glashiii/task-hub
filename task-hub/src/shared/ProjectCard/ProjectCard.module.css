@@ -5,6 +5,19 @@
     text-align: center;
     background: #fff;
     margin: 1rem;
+    padding-top: 5px
+}
+
+.card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 1rem;
+}
+
+.card h2{
+    font-size: 24px;
 }
 
 .card-body{
@@ -12,6 +25,38 @@
     flex-direction: column;
     justify-content: left;
     text-align: left;
-    padding: 1rem;
+    padding: 0.5rem 1rem 1rem;
+    line-height: 16px;
+}
+
+.card-text-info{
+    color: var(--text-color-dark-info);
     line-height: 20px;
+}
+
+.card-delete-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.delete-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-main);
+    border: none;
+    height: 40px;
+    width: 40px;
+    border-radius: 8px;
+}
+
+.delete-btn img{
+    width: 25px;
+    height: 25px;
+}
+
+.delete-btn:hover img{
+    transform: scale(1.2);
+    transition-duration: 0.2s;
 }

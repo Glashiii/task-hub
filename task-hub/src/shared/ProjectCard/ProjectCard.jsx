@@ -1,17 +1,31 @@
 import styles from './ProjectCard.module.css'
 
-const ProjectCard = () => {
+const ProjectCard = (props) => {
+    const {
+        title,
+        info,
+        tasksCount,
+        completedCount,
+    } = props
+
     return(
         <div className={styles.card}>
-            <h2 className="card-header">Some Header</h2>
+            <div className={styles["card-header"]}>
+                <h2>{title}</h2>
+                <div className={styles["card-delete-area"]}>
+                    <button className={styles["delete-btn"]}>
+                        <img src={new URL("./img/ic_baseline-delete.svg", import.meta.url).href} alt="DEL" />
+                    </button>
+                </div>
+            </div>
             <hr />
             <div className={styles["card-body"]}>
-                <p className="card-text">Some text</p>
-                <p className="card-text">Tasks count: </p>
-                <p className="card-text">Completed: </p>
-                <p className="card-text">Uncompleted: </p>
+                <p className={styles["card-text-info"]}>{info}</p>
+                <p className="card-text">Tasks count: {tasksCount} </p>
+                <p className="card-text">Completed: {completedCount}/{tasksCount}</p>
                 <p className="card-text">Progress bar</p>
-                <button>delete</button>
+
+
             </div>
         </div>
     )
