@@ -1,11 +1,12 @@
-import {Navigate, Outlet} from "react-router-dom";
+import {Navigate, Outlet, useLocation} from "react-router-dom";
 import {useAuth} from "../../entities/user/model/hooks/use-auth.js";
 
 const RequireAuth = () => {
 
-    const {
-        isAuth
-    } = useAuth()
+    const { isAuth, isInited } = useAuth();
+    const location = useLocation();
+
+    if (!isInited) return null;
 
 
     if(!isAuth){
