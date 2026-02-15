@@ -1,7 +1,9 @@
 import styles from './ProjectCard.module.css'
+import {deleteProject} from "../../features/projects.js"
 
 const ProjectCard = (props) => {
     const {
+        id,
         title,
         info,
         tasksCount,
@@ -13,7 +15,7 @@ const ProjectCard = (props) => {
             <div className={styles["card-header"]}>
                 <h2>{title}</h2>
                 <div className={styles["card-delete-area"]}>
-                    <button className={styles["delete-btn"]}>
+                    <button className={styles["delete-btn"]} onClick={() => deleteProject(id)}>
                         <img src={new URL("./img/ic_baseline-delete.svg", import.meta.url).href} alt="DEL" />
                     </button>
                 </div>
