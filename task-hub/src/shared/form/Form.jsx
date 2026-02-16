@@ -1,11 +1,13 @@
 import {useState} from 'react'
+import styles from './Form.module.css'
 
 const Form = ({title, handleClick}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     return (
-        <div>
+        <div className={styles["form"]}>
             <input
+                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -13,6 +15,7 @@ const Form = ({title, handleClick}) => {
             />
 
             <input
+                id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
