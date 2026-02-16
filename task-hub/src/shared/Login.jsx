@@ -1,7 +1,7 @@
 // import {useDispatch} from "react-redux";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 // import {setUser} from '../app/store/slices/userSlice'
-import {Form} from "./form/Form.jsx";
+import {AuthForm} from "./authForm/AuthForm.jsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useUser} from "../app/store/use-user.js";
 
@@ -25,7 +25,7 @@ const Login = () => {
 
 
     return (
-        <Form
+        <AuthForm
             title="Login"
             handleClick={handleLogin}
         />

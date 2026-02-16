@@ -6,7 +6,7 @@ const Sidebar = () => {
     return (
         <aside className={styles.sidebar}>
             <div className={styles.sidebarHeader}>
-                <h1>TaskHub</h1>
+                <h1 className={styles["headerText"]}>TaskHub</h1>
             </div>
             <hr className={styles.sidebarDivider}/>
             <nav>

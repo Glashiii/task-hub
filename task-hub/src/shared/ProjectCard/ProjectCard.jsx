@@ -1,5 +1,6 @@
 import styles from './ProjectCard.module.css'
 import {deleteProject} from "../../features/projects.js"
+import { useNavigate } from "react-router-dom";
 
 const ProjectCard = (props) => {
     const {
@@ -10,8 +11,14 @@ const ProjectCard = (props) => {
         completedCount,
     } = props
 
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate("/projects/" + id);
+    }
+
     return(
-        <div className={styles.card}>
+        <div className={styles.card} onClick={handleClick}>
             <div className={styles["card-header"]}>
                 <h2>{title}</h2>
                 <div className={styles["card-delete-area"]}>

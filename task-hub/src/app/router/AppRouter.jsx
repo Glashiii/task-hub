@@ -5,6 +5,7 @@ import MainLayout from "../MainLayout.jsx";
 import LoginPage from "../../pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "../../pages/RegisterPage/RegisterPage.jsx";
 import RequireAuth from "./RequireAuth.jsx";
+import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail.jsx";
 
 const AppRouter = () => {
     return (
@@ -16,6 +17,7 @@ const AppRouter = () => {
                     <Route index element={<Dashboard/>}/>
                     <Route path="/profile" element={<Profile/>}/>
                     <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route path='/projects/:projectId' element={<ProjectDetail/>}/>
                 </Route>
             </Route>
             <Route path="*" element={<Navigate to="/login" replace />} />

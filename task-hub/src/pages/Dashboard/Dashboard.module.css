@@ -1,8 +1,8 @@
 .dashboard {
     min-height: 100vh;
+
     display: flex;
     flex-direction: column;
-    justify-items: center;
 }
 
 .cardField {
@@ -17,10 +17,27 @@
 
 .dashboardContent {
     flex: 1 1 auto;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .dashboardFooter {
-    flex: 0 0 auto;
-    margin-top: auto;
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    bottom: 0;
+    border-top: 1px solid #ddd;
+}
+
+.footerButton{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+}
+
+
+@media (max-width: 800px) {
+    .cardField {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

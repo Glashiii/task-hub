@@ -7,6 +7,8 @@ import {
 } from "../../features/projects.js"
 import {useEffect, useState} from "react";
 import {auth} from "../../../firebase.js"
+import {Modal} from "../../shared/modal/Modal.jsx";
+import AddProjectForm from "../../widgets/addProjectForm/AddProjectForm.jsx";
 
 
 const Dashboard = () => {
@@ -22,6 +24,8 @@ const Dashboard = () => {
     const afterDoc = pageCursors[pageIndex];
 
     const [loading, setLoading] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+
 
     useEffect(() => {
         if (!userId) return;
@@ -64,14 +68,7 @@ const Dashboard = () => {
     return (
         <div className={styles.dashboard}>
             <div className={styles["dashboard-header"]}>
-                <h1>Welcome</h1>
-                <button onClick={() => {
-                    addProject("title3", "info3")
-                    setPageCursors([null]);
-                    setPageIndex(0);
-                }}>add
-                </button>
-                <hr />
+                <button type="button" onClick={() => (setModalOpen(true))}>Add new project</button>
             </div>
 
 
@@ -96,11 +93,17 @@ const Dashboard = () => {
                 )}
             </div>
 
-            <div className={styles["dashboard-footer"]}>
-                <p>Page: {pageIndex + 1}</p>
+            <div className={styles["dashboardFooter"]}>
+
                 <button onClick={onPrev} disabled={pageIndex === 0}>Prev</button>
+                <p>Page: {pageIndex + 1}</p>
                 <button onClick={onNext} disabled={projects.length !== PAGE_SIZE}>Next</button>
             </div>
+
+            <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+                <AddProjectForm setPageCursors={setPageCursors}
+                                setPageIndex={setPageIndex} />
+            </Modal>
         </div>
     )
 }

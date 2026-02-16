@@ -12,15 +12,16 @@
 .sidebar-header {
     display: flex;
     flex-direction: column;
-    text-align: center;
+    text-align: center;;
 }
-h1 {
+
+ h1 {
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 1em;
     height: 100%;
 }
 

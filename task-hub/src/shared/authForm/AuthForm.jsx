@@ -1,7 +1,7 @@
 import {useState} from 'react'
-import styles from './Form.module.css'
+import styles from './AuthForm.module.css'
 
-const Form = ({title, handleClick}) => {
+const AuthForm = ({title, handleClick}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -28,4 +28,4 @@ const Form = ({title, handleClick}) => {
     )
 }
 
-export {Form}
+export {AuthForm}
