@@ -14,80 +14,93 @@ const Dashboard = () => {
     const userId = auth.currentUser?.uid;
 
     const [projects, setProjects] = useState([]);
-    const [firstDoc, setFirstDoc] = useState(null);
     const [lastDoc, setLastDoc] = useState(null);
 
-    const [cursor, setCursor] = useState(null);
-    const [page, setPage] = useState(0);
+    const [pageIndex, setPageIndex] = useState(0);
+    const [pageCursors, setPageCursors] = useState([null]);
 
-    const hasNext = projects.length === PAGE_SIZE;
+    const afterDoc = pageCursors[pageIndex];
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!userId) return;
 
-        const unsub = subscribeProjectsPage({
-            userId,
-            cursor,
-            onData: ({items, firstDoc, lastDoc}) => {
-                setProjects(items);
-                setFirstDoc(firstDoc);
-                setLastDoc(lastDoc);
-            },
-            onError: (err) => console.error(err),
-        });
+        setLoading(true);
 
+        const unsub = subscribeProjectsPage({
+                userId,
+                afterDoc,
+                onData: ({items, lastDoc}) => {
+                    setProjects(items);
+                    setLastDoc(lastDoc);
+                    setLoading(false);
+                },
+                onError: (e) => {
+                    console.error(e);
+                    setLoading(false);
+                },
+            }
+        )
         return () => unsub();
-    })
+    }, [userId, afterDoc]);
 
     const onNext = () => {
         if (!lastDoc) return;
-        setCursor({ after: lastDoc });
-        setPage((p) => p + 1);
+
+        setPageCursors((prev) => {
+            const next = [...prev];
+            next[pageIndex + 1] = lastDoc;
+            return next;
+        });
+
+        setPageIndex((p) => p + 1);
     };
 
     const onPrev = () => {
-        if (page === 0) return;
-
-        if (page === 1) {
-            setCursor(null);
-            setPage(0);
-            return;
-        }
-
-        setCursor({ before: firstDoc });
-        setPage((p) => p - 1);
+        setPageIndex((p) => Math.max(0, p - 1));
     };
 
     return (
         <div className={styles.dashboard}>
-            <h1>Welcome</h1>
-            <button onClick={() => {
-                addProject("title3", "info3")
-                setCursor(null);
-                setPage(0);
-            }}>add</button>
-
-            <div className={styles["card-field"]}>
-                {projects.map(p => (
-                    <ProjectCard
-                    key={p.id}
-                    id={p.id}
-                    title={p.title}
-                    info={p.info}
-                    tasksCount={p.taskCount}
-                    completedCount={p.completedCount}
-                    />
-                ))}
+            <div className={styles["dashboard-header"]}>
+                <h1>Welcome</h1>
+                <button onClick={() => {
+                    addProject("title3", "info3")
+                    setPageCursors([null]);
+                    setPageIndex(0);
+                }}>add
+                </button>
+                <hr />
             </div>
-            <p>Page: {page+1}</p>
-            <button onClick={onPrev} disabled={page === 0}>
-                Prev
-            </button>
 
-            <button onClick={onNext} disabled={!hasNext}>
-                Next
-            </button>
 
+            <div className={styles.dashboardContent}>
+                {loading ? (
+                    <div>Projects are loading...</div>
+                ) : projects.length === 0 ? (
+                    <div>No projects yet</div>
+                ) : (
+                    <div className={styles.cardField}>
+                        {projects.map((p) => (
+                            <ProjectCard
+                                key={p.id}
+                                id={p.id}
+                                title={p.title}
+                                info={p.info}
+                                tasksCount={p.taskCount}
+                                completedCount={p.completedCount}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            <div className={styles["dashboard-footer"]}>
+                <p>Page: {pageIndex + 1}</p>
+                <button onClick={onPrev} disabled={pageIndex === 0}>Prev</button>
+                <button onClick={onNext} disabled={projects.length !== PAGE_SIZE}>Next</button>
+            </div>
         </div>
     )
 }

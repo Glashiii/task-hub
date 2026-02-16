@@ -40,50 +40,24 @@ export const deleteProject = async (projectId) => {
     }
 }
 
-export function buildProjectsPageQuery(db, userId, cursor) {
+export function buildProjectsPageQuery(userId, afterDoc) {
     const colRef = collection(db, "users", userId, "projects");
 
-    if (!cursor) {
-        return query(colRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
-    }
-
-    if (cursor.after) {
-        return query(
-            colRef,
-            orderBy("createdAt", "desc"),
-            startAfter(cursor.after),
-            limit(PAGE_SIZE)
-        );
-    }
-
-    if (cursor.before) {
-        return query(
-            colRef,
-            orderBy("createdAt", "desc"),
-            endBefore(cursor.before),
-            limitToLast(PAGE_SIZE)
-        );
-    }
-
-    return query(colRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
+    return afterDoc
+        ? query(colRef, orderBy("createdAt", "desc"), startAfter(afterDoc), limit(PAGE_SIZE))
+        : query(colRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
 }
 
-export function subscribeProjectsPage({ userId, cursor, onData, onError }) {
-    if (!userId) throw new Error("Not authorized");
+export function subscribeProjectsPage({ userId, afterDoc, onData, onError }) {
+    const q = buildProjectsPageQuery(userId, afterDoc);
 
-    const q = buildProjectsPageQuery(db, userId, cursor);
-
-    const unsub = onSnapshot(
+    return onSnapshot(
         q,
         (snap) => {
-            const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-            const firstDoc = snap.docs[0] ?? null;
+            const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
             const lastDoc = snap.docs[snap.docs.length - 1] ?? null;
-
-            onData({ items, firstDoc, lastDoc });
+            onData({ items, lastDoc });
         },
         onError
     );
-
-    return unsub;
 }

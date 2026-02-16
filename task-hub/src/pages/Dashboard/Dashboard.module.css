@@ -1,11 +1,26 @@
 .dashboard {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-items: center;
 }
 
-.card-field {
+.cardField {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
 
+.dashboardHeader {
+    flex: 0 0 auto;
+}
+
+.dashboardContent {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+.dashboardFooter {
+    flex: 0 0 auto;
+    margin-top: auto;
 }
