@@ -1,7 +1,7 @@
 import {auth, db} from "../../firebase.js";
 import {
-    addDoc, collection, serverTimestamp, deleteDoc,
-    doc, onSnapshot, query, orderBy, limit, startAfter, endBefore, limitToLast
+    addDoc, collection, serverTimestamp, deleteDoc, getDoc,
+    doc, onSnapshot, query, orderBy, limit, startAfter
 } from "firebase/firestore";
 
 export const PAGE_SIZE = 6;
@@ -60,4 +60,22 @@ export function subscribeProjectsPage({ userId, afterDoc, onData, onError }) {
         },
         onError
     );
+}
+
+export const getProjectById = async (projectId) => {
+    const userId = auth.currentUser?.uid;
+
+    if (!userId) {
+        throw new Error("Not authorized");
+    }
+
+    try{
+        const docRef = doc(db, "users", userId, "projects", projectId);
+        const docSnap  =
+            await getDoc(docRef);
+        return docSnap.data()
+    } catch (e) {
+        throw new Error(e)
+    }
+
 }
