@@ -1,0 +1,23 @@
+.project-detail{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border: 15px solid white;
+    border-radius: 10px;
+
+
+}
+
+.project-detail-info{
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.project-detail-main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: space-between;
+}
