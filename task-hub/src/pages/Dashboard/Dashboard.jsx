@@ -1,7 +1,6 @@
 import ProjectCard from "../../shared/ProjectCard/ProjectCard.jsx";
 import styles from "./Dashboard.module.css"
 import {
-    addProject,
     PAGE_SIZE,
     subscribeProjectsPage
 } from "../../features/projects.js"
@@ -9,6 +8,7 @@ import {useEffect, useState} from "react";
 import {auth} from "../../../firebase.js"
 import {Modal} from "../../shared/modal/Modal.jsx";
 import AddProjectForm from "../../widgets/addProjectForm/AddProjectForm.jsx";
+import SearchBar from "../../shared/searchBar/SearchBar.jsx";
 
 
 const Dashboard = () => {
@@ -25,6 +25,8 @@ const Dashboard = () => {
 
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+
+    const [searchQuery, setSearchQuery] = useState("");
 
 
     useEffect(() => {
@@ -65,10 +67,20 @@ const Dashboard = () => {
         setPageIndex((p) => Math.max(0, p - 1));
     };
 
+    const clearSearchQuery = searchQuery.trim().toLowerCase()
+    const filteredProjects = clearSearchQuery.length > 0
+        ? projects.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
+        : null
+
     return (
         <div className={styles.dashboard}>
             <div className={styles["dashboard-header"]}>
                 <button type="button" onClick={() => (setModalOpen(true))}>Add new project</button>
+                <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+                           id={"taskSearchBar"}
+                           label={"Search"}
+                           type={"search"}
+                />
             </div>
 
 
@@ -79,7 +91,7 @@ const Dashboard = () => {
                     <div>No projects yet</div>
                 ) : (
                     <div className={styles.cardField}>
-                        {projects.map((p) => (
+                        {(filteredProjects ?? projects).map((p) => (
                             <ProjectCard
                                 key={p.id}
                                 id={p.id}

@@ -4,7 +4,7 @@ import {getProjectById} from '../../features/projects.js'
 import {
     addTask, deleteTask, fetchTasksNextPage,
     subscribeTasksHead,
-    TASKS_PAGE_SIZE
+    TASKS_PAGE_SIZE, toggleTaskCompleted
 } from '../../features/tasks.js'
 import styles from './ProjectDetail.module.css';
 import {auth, db} from "../../../firebase.js";
@@ -118,10 +118,14 @@ const ProjectDetail = () => {
 
             <div>
                 {(filteredTasks ?? tasks).map(t => (
-                    <div key={t.id} className={styles['task']}>
+                    <div key={t.id} className={`${styles['task']} ${t.completed ? styles['completed'] : ''}`}>
                         {t.title}
+                        {t.completed.toString()}
                         <button onClick={() => deleteTask(t.id, projectId)}>
                             delete Task
+                        </button>
+                        <button onClick={() => toggleTaskCompleted(t.id, projectId, !(t.completed))}>
+                            toggle
                         </button>
                     </div>
                 ))}

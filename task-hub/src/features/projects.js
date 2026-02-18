@@ -73,6 +73,7 @@ export const getProjectById = async (projectId) => {
         const docRef = doc(db, "users", userId, "projects", projectId);
         const docSnap  =
             await getDoc(docRef);
+        if (!docSnap.exists()) return null;
         return docSnap.data()
     } catch (e) {
         throw new Error(e)

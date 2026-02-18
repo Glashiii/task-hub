@@ -1,6 +1,7 @@
 import styles from './ProjectCard.module.css'
 import {deleteProject} from "../../features/projects.js"
 import { useNavigate } from "react-router-dom";
+import ProjectProgressBar from "../../widgets/ProjectProgressBar.jsx";
 
 const ProjectCard = (props) => {
     const {
@@ -17,6 +18,9 @@ const ProjectCard = (props) => {
         navigate("/projects/" + id);
     }
 
+
+    const completedPercent = tasksCount ? completedCount / tasksCount : 0;
+
     return(
         <div className={styles.card} onClick={handleClick}>
             <div className={styles["card-header"]}>
@@ -32,8 +36,8 @@ const ProjectCard = (props) => {
                 <p className={styles["card-text-info"]}>{info}</p>
                 <p className="card-text">Tasks count: {tasksCount} </p>
                 <p className="card-text">Completed: {completedCount}/{tasksCount}</p>
-                <p className="card-text">Progress bar</p>
-
+                {/*<p className="card-text">Progress bar</p>*/}
+                <ProjectProgressBar completedPart={completedPercent} />
 
             </div>
         </div>

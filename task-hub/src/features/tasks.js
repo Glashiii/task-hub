@@ -1,7 +1,7 @@
 import {auth, db} from "../../firebase.js";
 import {
     addDoc, collection, deleteDoc, doc, getDocs, limit, onSnapshot,
-    orderBy, query, serverTimestamp, startAfter
+    orderBy, query, serverTimestamp, startAfter, updateDoc, runTransaction, increment
 } from "firebase/firestore";
 
 export const TASKS_PAGE_SIZE = 10;
@@ -13,15 +13,20 @@ export const addTask = async (title, projectId) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        await addDoc(collection(db, "users", userId, "projects", projectId, "tasks"), {
+    const projectRef = doc(db, "users", userId, "projects", projectId);
+    const taskRef = doc(collection(db, "users", userId, "projects", projectId, "tasks"))
+
+    await runTransaction(db, async (tx) => {
+        tx.set(taskRef, {
             title,
             completed: false,
-            createdAt: serverTimestamp()
+            createdAt: serverTimestamp(),
         });
-    } catch (e) {
-        console.error("Error adding task: ", e);
-    }
+
+        tx.update(projectRef, {
+            taskCount: increment(1),
+        });
+    });
 }
 
 export const deleteTask = async (taskId, projectId) => {
@@ -31,11 +36,44 @@ export const deleteTask = async (taskId, projectId) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        await deleteDoc(doc(db, "users", userId, "projects", projectId, "tasks", taskId));
-    } catch (e) {
-        console.error("Error delete document: ", e);
+    const projectRef = doc(db, "users", userId, "projects", projectId);
+    const taskRef = doc(db, "users", userId, "projects", projectId, "tasks", taskId);
+
+    await runTransaction(db, async (tx) => {
+        const taskSnap = await tx.get(taskRef);
+        if (!taskSnap.exists()) return;
+
+        const { completed } = taskSnap.data();
+
+        tx.delete(taskRef);
+
+        tx.update(projectRef, {
+            taskCount: increment(-1),
+            ...(completed ? { completedCount: increment(-1) } : {}),
+        });
+    });
+}
+
+export const toggleTaskCompleted = async (taskId, projectId, completed) => {
+    const userId = auth.currentUser?.uid;
+
+    if (!userId) {
+        throw new Error("Not authorized");
     }
+
+    const projectRef = doc(db, "users", userId, "projects", projectId);
+    const taskRef = doc(db, "users", userId, "projects", projectId, "tasks", taskId);
+
+    await runTransaction(db, async (tx) => {
+        const snap = await tx.get(taskRef);
+        if (!snap.exists()) return;
+
+        const prev = snap.data().completed;
+        const next = !prev;
+
+        tx.update(taskRef, { completed: completed });
+        tx.update(projectRef, { completedCount: increment(next ? 1 : -1) });
+    });
 }
 
 
