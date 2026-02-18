@@ -8,6 +8,7 @@ import {
 } from '../../features/tasks.js'
 import styles from './ProjectDetail.module.css';
 import {auth, db} from "../../../firebase.js";
+import SearchBar from "../../shared/searchBar/SearchBar.jsx";
 
 const ProjectDetail = () => {
 
@@ -21,6 +22,8 @@ const ProjectDetail = () => {
 
     const [cursor, setCursor] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const [searchQuery, setSearchQuery] = useState("");
 
 
     useEffect(() => {
@@ -55,7 +58,7 @@ const ProjectDetail = () => {
                 setHead(items);
                 setTail([]);
                 setCursor(lastDoc);
-                setHasMore(items.length === TASKS_PAGE_SIZE); // упрощённо
+                setHasMore(items.length === TASKS_PAGE_SIZE);
             },
             onError: console.error,
         });
@@ -81,6 +84,11 @@ const ProjectDetail = () => {
 
     const tasks = useMemo(() => [...head, ...tail], [head, tail]);
 
+    const clearSearchQuery = searchQuery.trim().toLowerCase()
+    const filteredTasks = clearSearchQuery.length > 0
+        ? tasks.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
+        : null
+
 
     if (loading || projectData === null) return <div>Loading tasks...</div>;
 
@@ -90,7 +98,13 @@ const ProjectDetail = () => {
                 <div className={styles['project-detail-info']}>
                     <div className={styles["project-detail-main"]}>
                         <p>{projectData.title}</p>
-                        Filter-plane
+
+                        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+                                   id={"taskSearchBar"}
+                                   label={"Search"}
+                                   type={"search"}
+                        />
+
                         <p>Completed: {projectData.completedCount}/{projectData.taskCount}</p>
                     </div>
                     <hr/>
@@ -103,7 +117,7 @@ const ProjectDetail = () => {
             </div>
 
             <div>
-                {tasks.map(t => (
+                {(filteredTasks ?? tasks).map(t => (
                     <div key={t.id} className={styles['task']}>
                         {t.title}
                         <button onClick={() => deleteTask(t.id, projectId)}>
