@@ -1,6 +1,6 @@
 import styles from './ProjectCard.module.css'
 import {deleteProject} from "../../features/projects.js"
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ProjectProgressBar from "../../widgets/ProjectProgressBar.jsx";
 
 const ProjectCard = (props) => {
@@ -21,23 +21,26 @@ const ProjectCard = (props) => {
 
     const completedPercent = tasksCount ? completedCount / tasksCount : 0;
 
-    return(
+    return (
         <div className={styles.card} onClick={handleClick}>
             <div className={styles["card-header"]}>
                 <h2>{title}</h2>
                 <div className={styles["card-delete-area"]}>
-                    <button className={styles["delete-btn"]} onClick={() => deleteProject(id)}>
-                        <img src={new URL("./img/ic_baseline-delete.svg", import.meta.url).href} alt="DEL" />
+                    <button className={styles["delete-btn"]} onClick={(e) => {
+                        e.stopPropagation();
+                        deleteProject(id)
+                    }}>
+                        <img src={new URL("./img/ic_baseline-delete.svg", import.meta.url).href} alt="DEL"/>
                     </button>
                 </div>
             </div>
-            <hr />
+            <hr/>
             <div className={styles["card-body"]}>
                 <p className={styles["card-text-info"]}>{info}</p>
                 <p className="card-text">Tasks count: {tasksCount} </p>
                 <p className="card-text">Completed: {completedCount}/{tasksCount}</p>
                 {/*<p className="card-text">Progress bar</p>*/}
-                <ProjectProgressBar completedPart={completedPercent} />
+                <ProjectProgressBar completedPart={completedPercent}/>
 
             </div>
         </div>

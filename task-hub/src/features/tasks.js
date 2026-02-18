@@ -71,7 +71,7 @@ export const toggleTaskCompleted = async (taskId, projectId, completed) => {
         const prev = snap.data().completed;
         const next = !prev;
 
-        tx.update(taskRef, { completed: completed });
+        tx.update(taskRef, { completed: next });
         tx.update(projectRef, { completedCount: increment(next ? 1 : -1) });
     });
 }
