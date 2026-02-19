@@ -54,7 +54,7 @@ export const deleteTask = async (taskId, projectId) => {
     });
 }
 
-export const toggleTaskCompleted = async (taskId, projectId, completed) => {
+export const toggleTaskCompleted = async (taskId, projectId) => {
     const userId = auth.currentUser?.uid;
 
     if (!userId) {

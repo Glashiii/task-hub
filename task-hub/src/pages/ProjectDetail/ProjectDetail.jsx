@@ -9,6 +9,9 @@ import {
 import styles from './ProjectDetail.module.css';
 import {auth, db} from "../../../firebase.js";
 import SearchBar from "../../shared/searchBar/SearchBar.jsx";
+import {Modal} from "../../shared/modal/Modal.jsx";
+import AddProjectForm from "../../widgets/addProjectForm/AddProjectForm.jsx";
+import AddTaskForm from "../../widgets/addTaskForm/AddTaskForm.jsx";
 
 const ProjectDetail = () => {
 
@@ -19,6 +22,7 @@ const ProjectDetail = () => {
     const [hasMore, setHasMore] = useState(true);
     const [head, setHead] = useState([]);
     const [tail, setTail] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const [cursor, setCursor] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -124,7 +128,7 @@ const ProjectDetail = () => {
                         <button onClick={() => deleteTask(t.id, projectId)}>
                             delete Task
                         </button>
-                        <button onClick={() => toggleTaskCompleted(t.id, projectId, !(t.completed))}>
+                        <button onClick={() => toggleTaskCompleted(t.id, projectId)}>
                             toggle
                         </button>
                     </div>
@@ -139,11 +143,14 @@ const ProjectDetail = () => {
                 </div>
                 <div>
                     {/*add new task (modal)*/}
-                    <button onClick={() => addTask("rnd", projectId)}>
-                        add Task
-                    </button>
+                    <button type="button"
+                            onClick={() => (setModalOpen(true))}>Add new task</button>
                 </div>
             </div>
+
+            <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+                <AddTaskForm projectId={projectId}/>
+            </Modal>
         </div>
 
 

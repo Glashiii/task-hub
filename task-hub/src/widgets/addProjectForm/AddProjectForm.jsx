@@ -7,7 +7,7 @@ const AddProjectForm = (props) => {
         setPageIndex,
     } = props;
 
-    const addTaskFormSubmit = (formData) => {
+    const addProjectFormSubmit = (formData) => {
         const title = formData.get("title");
         const info = formData.get("info");
         addProject(title, info);
@@ -17,7 +17,7 @@ const AddProjectForm = (props) => {
 
     return (
         <div>
-            <form action={addTaskFormSubmit}>
+            <form action={addProjectFormSubmit}>
                 <div>
                     <label htmlFor="title">Title:</label>
                     <input type="text" name="title" id="title" required/>
