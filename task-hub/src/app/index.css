@@ -24,6 +24,8 @@
     --sidebar-hover: #E9F5FE;
     --warning-color-hover: #9c373a;
 
+    --color-elements-main: #0C7FDA;
+    --color-elements-hover: #1168b1;
 
 
     --background-color: #EFF2F4;
@@ -48,7 +50,8 @@ body {
     min-height: 100vh;
     background-color: var(--background-color);
 }
-a{
+
+a {
     width: 100%;
 }
 
@@ -60,7 +63,7 @@ a{
 }
 
 .projects {
-  display: flex;
+    display: flex;
 }
 
 .Dashboard {
@@ -68,16 +71,38 @@ a{
     background-color: var(--background-color);
 }
 
-p{
+p {
     color: var(--text-color-dark);
 }
 
 .login-page {
-   display: flex;
+    display: flex;
     flex-direction: column;
 }
 
 .register-page {
     display: flex;
     flex-direction: column;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--text-color-hover);
+    border-radius: 5px;
+    outline: none;
+    background-color: var(--text-color-hover);
+    padding: 0 10px 3px;
+}
+
+button:hover {
+    background-color: var(--color-elements-hover);
+    border-color: var(--color-elements-hover);
+    transition-duration: 0.2s;
+}
+
+a {
+    color: var(--color-elements-main);
+    text-decoration: none;
 }

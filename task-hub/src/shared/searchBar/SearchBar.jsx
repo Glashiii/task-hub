@@ -7,6 +7,7 @@ const SearchBar = (props) => {
         id,
         label,
         type,
+        placeholder,
         searchQuery,
         setSearchQuery,
     } = props
@@ -22,7 +23,7 @@ const SearchBar = (props) => {
             <input
                 className="field__input"
                 id={id}
-                placeholder=" "
+                placeholder={placeholder}
                 autoComplete="off"
                 type={type}
                 value={searchQuery}

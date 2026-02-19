@@ -75,12 +75,14 @@ const Dashboard = () => {
     return (
         <div className={styles.dashboard}>
             <div className={styles["dashboard-header"]}>
-                <button type="button" onClick={() => (setModalOpen(true))}>Add new project</button>
                 <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+                           placeholder={"Search by project"}
                            id={"taskSearchBar"}
-                           label={"Search"}
+                           label={""}
                            type={"search"}
                 />
+
+                <button type="button" onClick={() => (setModalOpen(true))}>Add new project</button>
             </div>
 
 
@@ -105,11 +107,15 @@ const Dashboard = () => {
                 )}
             </div>
 
-            <div className={styles["dashboardFooter"]}>
+            <div className={styles["dashboard-footer"]}>
 
-                <button onClick={onPrev} disabled={pageIndex === 0}>Prev</button>
+                <button type="button" onClick={onPrev} disabled={pageIndex === 0} className={styles["flip-horizontal"]}>
+                    <img src={new URL("./img/arrow.svg", import.meta.url).href} alt="prev"/>
+                </button>
                 <p>Page: {pageIndex + 1}</p>
-                <button onClick={onNext} disabled={projects.length !== PAGE_SIZE}>Next</button>
+                <button onClick={onNext} disabled={projects.length !== PAGE_SIZE}>
+                    <img src={new URL("./img/arrow.svg", import.meta.url).href} alt="next"/>
+                </button>
             </div>
 
             <Modal open={modalOpen} onClose={() => setModalOpen(false)}>

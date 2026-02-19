@@ -12,16 +12,18 @@
 .sidebar-header {
     display: flex;
     flex-direction: column;
-    text-align: center;;
+    text-align: center;
 }
-
+.header-text{
+    font-size: clamp(16px, 2vw + 6px, 40px);
+    margin: 0;
+}
  h1 {
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 1em;
     height: 100%;
 }
 
@@ -30,7 +32,7 @@ hr {
     padding: 0;
 }
 
-nav {
+.sidebar-nav {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -39,6 +41,10 @@ nav {
 a{
     flex: auto;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     padding: 10px 0;
     max-height: 50px;
 }
@@ -46,4 +52,8 @@ a{
 .logoutBtn{
     flex: 0 0 auto;
     margin-top: auto;
+}
+
+img{
+    scale: 1;
 }

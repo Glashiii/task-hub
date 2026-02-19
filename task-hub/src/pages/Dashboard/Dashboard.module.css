@@ -11,8 +11,37 @@
     gap: 12px;
 }
 
-.dashboardHeader {
-    flex: 0 0 auto;
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px;
+    background: white;
+}
+
+.dashboard-header form {
+    flex: 1;
+}
+
+.dashboard-header input {
+    width: 100%;
+    flex: 1;
+    border: 2px var(--text-color-dark-info) solid;
+    border-radius: 5px;
+    color: var(--text-color-dark);
+}
+
+input:focus {
+    border: 2px var(--text-color-dark-info) solid;
+    border-radius: 5px;
+    color: var(--text-color-dark);
+    outline: none;
+}
+
+.dashboard-header button {
+    margin: 5px 10px;
 }
 
 .dashboardContent {
@@ -20,7 +49,7 @@
     overflow-y: auto;
 }
 
-.dashboardFooter {
+.dashboard-footer {
     position: sticky;
     display: flex;
     flex-direction: row;
@@ -29,12 +58,34 @@
     border-top: 1px solid #ddd;
 }
 
-.footerButton{
+.dashboard-footer button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 40px;
+    width: 40px;
+}
+
+.dashboard-footer img {
+    scale: 0.5;
+    margin-left: 4px;
+    margin-top: 3px;
+}
+
+.footerButton {
     display: flex;
     flex-direction: row;
     justify-items: center;
 }
 
+.footerButton:hover {
+    cursor: pointer;
+}
+
+.flip-horizontal {
+    transform: scaleX(-1);
+}
 
 @media (max-width: 800px) {
     .cardField {

@@ -1,4 +1,4 @@
-form{
+.auth-form{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,5 +9,16 @@ input{
     margin: 5px;
     background-color: white;
     color: var(--text-color-dark);
+}
+
+.auth-form-input{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.invalid{
+    color: var(--warning-color);
+    margin-bottom: 15px;
 }
 

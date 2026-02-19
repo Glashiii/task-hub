@@ -5,9 +5,14 @@ const SidebarLink = (props) => {
     const {
         title,
         url,
+        imgPath,
+        alt
     } = props
     return (
-        <Link to={url} className={styles["sidebar-link"]}>{title}</Link>
+        <Link to={url} className={styles["sidebar-links"]}>
+                <img src={imgPath} alt={alt}/>
+                <p>{title}</p>
+        </Link>
     )
 }
 

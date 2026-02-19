@@ -11,7 +11,7 @@ const LoginPage = () => {
             <div className={styles["formContainer"]}>
                 <Login />
                 <p>
-                    or <Link to='/register'>Register</Link>
+                    or <span className={styles["link"]}><Link to='/register'>Register</Link></span>
                 </p>
             </div>
         </div>
