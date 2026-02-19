@@ -5,8 +5,17 @@
     text-align: center;
     background: #fff;
     margin: 1rem;
-    padding-top: 5px
+    padding-top: 5px;
+    border-radius: 10px;
+
+    transition: 0.3s ease-out;
 }
+
+.card:hover{
+    scale: 1.05;
+    cursor: pointer;
+}
+
 
 .card-header{
     display: flex;
@@ -25,13 +34,21 @@
     flex-direction: column;
     justify-content: left;
     text-align: left;
-    padding: 0.5rem 1rem 1rem;
-    line-height: 16px;
+    padding: 0 1rem 1rem;
+    line-height: 20px;
+    margin-bottom: 10px;
 }
 
 .card-text-info{
     color: var(--text-color-dark-info);
-    line-height: 20px;
+    line-height: 10px;
+}
+
+p{
+    margin: 0;
+}
+
+.card-text{
 }
 
 .card-delete-area{
@@ -49,6 +66,10 @@
     height: 40px;
     width: 40px;
     border-radius: 8px;
+}
+
+.delete-btn:hover{
+    background-color: var(--color-main);
 }
 
 .delete-btn img{
