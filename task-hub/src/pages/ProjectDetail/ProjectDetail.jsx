@@ -99,20 +99,23 @@ const ProjectDetail = () => {
     return (
         <div>
             <div className={styles['project-detail']}>
-                <div className={styles['project-detail-info']}>
+                <div className={styles['project-details']}>
                     <div className={styles["project-detail-main"]}>
-                        <p>{projectData.title}</p>
+                        <h2>{projectData.title}</h2>
 
                         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                                    id={"taskSearchBar"}
-                                   label={"Search"}
+                                   label={""}
                                    type={"search"}
+                                   placeholder={"Search"}
                         />
 
                         <p>Completed: {projectData.completedCount}/{projectData.taskCount}</p>
                     </div>
                     <hr/>
-                    <div>{projectData.info}</div>
+                    <div className={styles['project-detail-info']}>
+                        <p>{projectData.info}</p>
+                    </div>
                 </div>
 
                 <div className={styles['tasks']}>
@@ -120,17 +123,31 @@ const ProjectDetail = () => {
                 </div>
             </div>
 
-            <div>
+            <div className={styles['task-detail']}>
                 {(filteredTasks ?? tasks).map(t => (
                     <div key={t.id} className={`${styles['task']} ${t.completed ? styles['completed'] : ''}`}>
-                        {t.title}
-                        {t.completed.toString()}
-                        <button onClick={() => deleteTask(t.id, projectId)}>
-                            delete Task
-                        </button>
-                        <button onClick={() => toggleTaskCompleted(t.id, projectId)}>
-                            toggle
-                        </button>
+                        <p>{t.title}</p>
+                        <div className={styles['task-buttons']}>
+                            <button
+                                className={styles['task-action-button']}
+                                onClick={() => deleteTask(t.id, projectId)}>
+                                <img src={new URL("./img/DeleteButton.svg", import.meta.url).href}
+                                     alt="delete" />
+                            </button>
+
+                            <button
+                                type="button"
+                                aria-pressed={t.completed}
+                                className={styles['task-action-button']}
+                                onClick={() => toggleTaskCompleted(t.id, projectId)}
+                            >
+                                <img src={t.completed ?
+                                    new URL("./img/checkbox-done.svg", import.meta.url).href:
+                                    new URL("./img/checkbox.svg", import.meta.url).href}
+                                     alt="checkbox" />
+                            </button>
+
+                        </div>
                     </div>
                 ))}
             </div>
@@ -139,12 +156,19 @@ const ProjectDetail = () => {
 
             <div className={styles['footer-buttons']}>
                 <div>
-                    {/*go back*/}
+                    <button type="button"
+                            onClick={() => (setModalOpen(true))}>
+                        <img src={new URL("./img/return.svg", import.meta.url).href}
+                             alt="delete" />
+                    </button>
                 </div>
                 <div>
-                    {/*add new task (modal)*/}
+
                     <button type="button"
-                            onClick={() => (setModalOpen(true))}>Add new task</button>
+                            onClick={() => (setModalOpen(true))}>
+                        <img src={new URL("./img/add.svg", import.meta.url).href}
+                             alt="add task" />
+                    </button>
                 </div>
             </div>
 
