@@ -62,21 +62,17 @@ export function subscribeProjectsPage({ userId, afterDoc, onData, onError }) {
     );
 }
 
-export const getProjectById = async (projectId) => {
-    const userId = auth.currentUser?.uid;
 
-    if (!userId) {
-        throw new Error("Not authorized");
-    }
+export const subscribeProject = ({ userId, projectId, onData, onError }) => {
+    if (!userId) throw new Error("Not authorized");
 
-    try{
-        const docRef = doc(db, "users", userId, "projects", projectId);
-        const docSnap  =
-            await getDoc(docRef);
-        if (!docSnap.exists()) return null;
-        return docSnap.data()
-    } catch (e) {
-        throw new Error(e)
-    }
+    const ref = doc(db, "users", userId, "projects", projectId);
 
+    return onSnapshot(
+        ref,
+        (snap) => {
+            onData?.(snap.exists() ? { id: snap.id, ...snap.data() } : null);
+        },
+        (err) => onError?.(err)
+    );
 }

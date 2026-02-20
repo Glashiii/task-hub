@@ -1,8 +1,8 @@
 import {useParams} from 'react-router-dom';
 import {useEffect, useMemo, useState} from "react";
-import {getProjectById} from '../../features/projects.js'
+import {subscribeProject} from '../../features/projects.js'
 import {
-    addTask, deleteTask, fetchTasksNextPage,
+    deleteTask, fetchTasksNextPage,
     subscribeTasksHead,
     TASKS_PAGE_SIZE, toggleTaskCompleted
 } from '../../features/tasks.js'
@@ -10,8 +10,8 @@ import styles from './ProjectDetail.module.css';
 import {auth, db} from "../../../firebase.js";
 import SearchBar from "../../shared/searchBar/SearchBar.jsx";
 import {Modal} from "../../shared/modal/Modal.jsx";
-import AddProjectForm from "../../widgets/addProjectForm/AddProjectForm.jsx";
 import AddTaskForm from "../../widgets/addTaskForm/AddTaskForm.jsx";
+import { useNavigate } from "react-router-dom";
 
 const ProjectDetail = () => {
 
@@ -31,22 +31,25 @@ const ProjectDetail = () => {
 
 
     useEffect(() => {
+        if (!userId || !projectId) return;
 
-        (async () => {
-                setLoading(true);
-                try {
-                    const project = await getProjectById(projectId)
-                    setProjectData(project)
-                } catch (e) {
-                    console.error("getProjectById error:", e);
-                } finally {
-                    console.log('tried')
-                    setLoading(false);
-                }
-            }
-        )();
+        setLoading(true);
 
-    }, [projectId]);
+        const unsub = subscribeProject({
+            userId,
+            projectId,
+            onData: (proj) => {
+                setProjectData(proj);
+                setLoading(false);
+            },
+            onError: (e) => {
+                console.error(e);
+                setLoading(false);
+            },
+        });
+
+        return () => unsub();
+    }, [userId, projectId]);
 
     useEffect(() => {
         if (!userId || !projectId) return;
@@ -92,6 +95,8 @@ const ProjectDetail = () => {
     const filteredTasks = clearSearchQuery.length > 0
         ? tasks.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
         : null
+
+    const navigate = useNavigate();
 
 
     if (loading || projectData === null) return <div>Loading tasks...</div>;
@@ -157,17 +162,19 @@ const ProjectDetail = () => {
             <div className={styles['footer-buttons']}>
                 <div>
                     <button type="button"
-                            onClick={() => (setModalOpen(true))}>
+                            onClick={() => navigate(-1)}>
                         <img src={new URL("./img/return.svg", import.meta.url).href}
-                             alt="delete" />
+                             alt="return" />
                     </button>
                 </div>
                 <div>
 
                     <button type="button"
-                            onClick={() => (setModalOpen(true))}>
+                            onClick={() => (setModalOpen(true))}
+                            >
                         <img src={new URL("./img/add.svg", import.meta.url).href}
-                             alt="add task" />
+                             alt="add task"
+                             id={styles["add-task"]}/>
                     </button>
                 </div>
             </div>

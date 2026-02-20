@@ -98,7 +98,26 @@ input:focus {
     margin-top: 3px
 }
 
+.footer-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 75%;
+    justify-content: space-around;
+}
+
+.footer-buttons button{
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+}
 
 .completed{
     text-decoration: line-through;
+}
+
+#add-task{
+    scale: 0.4;
+    margin-top: -9px
 }
