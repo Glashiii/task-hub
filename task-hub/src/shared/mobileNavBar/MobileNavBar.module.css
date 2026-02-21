@@ -1,0 +1,13 @@
+.mobile-nav-bar{
+    display: none;
+    flex-direction: row;
+    height: 50px;
+    background-color: #fff;
+}
+
+@media (max-width: 576px) {
+.mobile-nav-bar {
+    display: flex;
+}
+    
+}

@@ -57,3 +57,9 @@ a{
 img{
     scale: 1;
 }
+
+@media (max-width: 576px) {
+    .sidebar {
+        display: none
+    }
+}
