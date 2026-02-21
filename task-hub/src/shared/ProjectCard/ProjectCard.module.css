@@ -81,3 +81,9 @@ p{
     transform: scale(1.2);
     transition-duration: 0.2s;
 }
+
+@media (max-width: 576px){
+    .card{
+        margin: 0px 20px;
+    }
+}

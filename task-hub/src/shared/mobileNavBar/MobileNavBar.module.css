@@ -1,4 +1,4 @@
-.mobile-nav-bar{
+.mobile-nav-bar {
     display: none;
     flex-direction: row;
     height: 50px;
@@ -6,8 +6,7 @@
 }
 
 @media (max-width: 576px) {
-.mobile-nav-bar {
-    display: flex;
-}
-    
+    .mobile-nav-bar {
+        display: flex;
+    }
 }
