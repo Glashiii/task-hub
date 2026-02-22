@@ -96,10 +96,33 @@ button {
     padding: 0 10px 3px;
 }
 
+select{
+    border: 3px solid var(--text-color-hover);
+    border-radius: 10px;
+    background-color: white;
+    color: var(--text-color-hover);
+    font-weight: bold;
+    appearance: none;
+}
+
 button:hover {
     background-color: var(--color-elements-hover);
     border-color: var(--color-elements-hover);
     transition-duration: 0.2s;
+}
+select:hover{
+    background-color: #f1f1f1;
+    border-color: var(--color-elements-hover);
+    transition-duration: 0.2s;
+}
+
+select:focus{
+    outline: none;
+}
+
+option {
+    border-radius: 10px;
+    font-weight: bold;
 }
 
 a {

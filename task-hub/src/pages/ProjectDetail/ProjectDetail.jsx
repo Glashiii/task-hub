@@ -102,7 +102,7 @@ const ProjectDetail = () => {
     if (loading || projectData === null) return <div>Loading tasks...</div>;
 
     return (
-        <div>
+        <div className={styles['project-container']}>
             <div className={styles['project-detail']}>
                 <div className={styles['project-details']}>
                     <div className={styles["project-detail-main"]}>

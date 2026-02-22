@@ -40,16 +40,16 @@ export const deleteProject = async (projectId) => {
     }
 }
 
-export function buildProjectsPageQuery(userId, afterDoc) {
+export function buildProjectsPageQuery(userId, afterDoc, sortDir) {
     const colRef = collection(db, "users", userId, "projects");
 
     return afterDoc
-        ? query(colRef, orderBy("createdAt", "desc"), startAfter(afterDoc), limit(PAGE_SIZE))
-        : query(colRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
+        ? query(colRef, orderBy("createdAt", sortDir), startAfter(afterDoc), limit(PAGE_SIZE))
+        : query(colRef, orderBy("createdAt", sortDir), limit(PAGE_SIZE));
 }
 
-export function subscribeProjectsPage({ userId, afterDoc, onData, onError }) {
-    const q = buildProjectsPageQuery(userId, afterDoc);
+export function subscribeProjectsPage({ userId, afterDoc, onData, onError, sortDir }) {
+    const q = buildProjectsPageQuery(userId, afterDoc, sortDir);
 
     return onSnapshot(
         q,

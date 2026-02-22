@@ -27,7 +27,7 @@ const Dashboard = () => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState("");
-
+    const [sortDir, setSortDir] = useState("desc");
 
     useEffect(() => {
         if (!userId) return;
@@ -37,6 +37,7 @@ const Dashboard = () => {
         const unsub = subscribeProjectsPage({
                 userId,
                 afterDoc,
+                sortDir,
                 onData: ({items, lastDoc}) => {
                     setProjects(items);
                     setLastDoc(lastDoc);
@@ -49,7 +50,8 @@ const Dashboard = () => {
             }
         )
         return () => unsub();
-    }, [userId, afterDoc]);
+    }, [userId, afterDoc, sortDir]);
+
 
     const onNext = () => {
         if (!lastDoc) return;
@@ -81,6 +83,11 @@ const Dashboard = () => {
                            label={""}
                            type={"search"}
                 />
+
+                <select value={sortDir} onChange={(e) => setSortDir(e.target.value)}>
+                    <option value="desc">New first</option>
+                    <option value="asc">Old first</option>
+                </select>
 
                 <button type="button" onClick={() => (setModalOpen(true))}>Add new project</button>
             </div>
