@@ -11,7 +11,7 @@ import {auth, db} from "../../../firebase.js";
 import SearchBar from "../../shared/searchBar/SearchBar.jsx";
 import {Modal} from "../../shared/modal/Modal.jsx";
 import AddTaskForm from "../../widgets/addTaskForm/AddTaskForm.jsx";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const ProjectDetail = () => {
 
@@ -89,6 +89,16 @@ const ProjectDetail = () => {
         setHasMore(items.length === TASKS_PAGE_SIZE);
     };
 
+    // optimistic UI example, not sure that it's the best way to do it
+    const optimisticToggle = (taskId) => {
+        const toggleInList = (list) =>
+            list.map(t => (t.id === taskId ? { ...t, completed: !t.completed } : t));
+
+        setHead(prev => toggleInList(prev));
+        setTail(prev => toggleInList(prev));
+    };
+
+
     const tasks = useMemo(() => [...head, ...tail], [head, tail]);
 
     const clearSearchQuery = searchQuery.trim().toLowerCase()
@@ -137,19 +147,22 @@ const ProjectDetail = () => {
                                 className={styles['task-action-button']}
                                 onClick={() => deleteTask(t.id, projectId)}>
                                 <img src={new URL("./img/DeleteButton.svg", import.meta.url).href}
-                                     alt="delete" />
+                                     alt="delete"/>
                             </button>
 
                             <button
                                 type="button"
                                 aria-pressed={t.completed}
                                 className={styles['task-action-button']}
-                                onClick={() => toggleTaskCompleted(t.id, projectId)}
+                                onClick={() => {
+                                    optimisticToggle(t.id)
+                                    toggleTaskCompleted(t.id, projectId)
+                                }}
                             >
                                 <img src={t.completed ?
-                                    new URL("./img/checkbox-done.svg", import.meta.url).href:
+                                    new URL("./img/checkbox-done.svg", import.meta.url).href :
                                     new URL("./img/checkbox.svg", import.meta.url).href}
-                                     alt="checkbox" />
+                                     alt="checkbox"/>
                             </button>
 
                         </div>
@@ -164,14 +177,14 @@ const ProjectDetail = () => {
                     <button type="button"
                             onClick={() => navigate(-1)}>
                         <img src={new URL("./img/return.svg", import.meta.url).href}
-                             alt="return" />
+                             alt="return"/>
                     </button>
                 </div>
                 <div>
 
                     <button type="button"
                             onClick={() => (setModalOpen(true))}
-                            >
+                    >
                         <img src={new URL("./img/add.svg", import.meta.url).href}
                              alt="add task"
                              id={styles["add-task"]}/>
