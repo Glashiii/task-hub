@@ -89,7 +89,14 @@ const Dashboard = () => {
                     <option value="asc">Old first</option>
                 </select>
 
-                <button type="button" onClick={() => (setModalOpen(true))}>Add new project</button>
+                <button type="button" onClick={() => (setModalOpen(true))}>
+                  <span className={styles['add-button-short']}>
+                      Add
+                  </span>
+                    <span className={styles['add-button-long']}>
+                        Add new task
+                    </span>
+                </button>
             </div>
 
 
@@ -127,7 +134,7 @@ const Dashboard = () => {
 
             <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
                 <AddProjectForm setPageCursors={setPageCursors}
-                                setPageIndex={setPageIndex} />
+                                setPageIndex={setPageIndex}/>
             </Modal>
         </div>
     )

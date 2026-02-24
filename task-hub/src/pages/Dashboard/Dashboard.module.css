@@ -119,3 +119,20 @@ input:focus {
     }
 
 }
+
+@media (min-width: 576px) {
+    .add-button-short{
+        display: none;
+    }
+    .add-button-long{
+        display: block;
+    }
+}
+@media (max-width: 576px) {
+    .add-button-short{
+        display: block;
+    }
+    .add-button-long{
+        display: none;
+    }
+}
