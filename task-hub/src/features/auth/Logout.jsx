@@ -11,7 +11,7 @@ const LogoutButton = () => {
     const onLogout = async () => {
         try {
             await signOut(auth);
-            removeUser();                 // можно, чтобы UI сразу обновился
+            removeUser();
             navigate("/login", {replace: true});
         } catch (e) {
             console.error("Logout error:", e);

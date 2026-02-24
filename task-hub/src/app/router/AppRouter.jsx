@@ -1,5 +1,5 @@
 import {Navigate, Route, Routes} from "react-router-dom";
-import Profile from "../../pages/Profile.jsx";
+import Profile from "../../pages/Profile/Profile.jsx";
 import Dashboard from "../../pages/Dashboard/Dashboard.jsx";
 import MainLayout from "../MainLayout.jsx";
 import LoginPage from "../../pages/LoginPage/LoginPage.jsx";

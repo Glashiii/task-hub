@@ -1,0 +1,13 @@
+.profile-container {
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.logoutBtn{
+    flex: 0 0 auto;
+    margin-top: auto;
+}
