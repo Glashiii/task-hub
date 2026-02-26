@@ -4,11 +4,12 @@ Task Hub - web app on react for managing your projects!
 - Use the site from your desktop and phone
 
 <hr>
+
 Technologies:
- - React
- - React router
- - Zustand
- - Firebase
+- React
+- React router
+- Zustand
+- Firebase
 
 
 You need to fiil up .env for firebase connection
